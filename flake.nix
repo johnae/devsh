@@ -165,11 +165,16 @@
               packages = tomlPackages ++ extraPackages;
             in
               mkSh ((recursiveUpdate toml extra) // { inherit packages; });
+
+          devsh = {
+            inherit ansiEsc mkSh loadTOML;
+          };
+
         in
           {
-            devSh = {
-              inherit ansiEsc mkSh loadTOML;
-            };
-        });
+            inherit devsh;
+            devSh = devsh;
+          }
+      );
     };
 }
