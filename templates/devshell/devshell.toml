@@ -1,0 +1,14 @@
+name = "devsh-example"
+
+intro = """
+{bold}{green}DevSH{normal} is a Nix devshell configurable using TOML.
+You can read more about it here:
+
+{bold}https://github.com/johnae/devsh{normal}
+"""
+
+## add the project packages below, use "nix search nixpkgs some-name-here" to find packages
+# packages = [
+#   "terraform",
+#   "nodejs-12_x"
+# ]
