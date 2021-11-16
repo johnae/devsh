@@ -18,9 +18,9 @@
         let
           inherit (builtins) mapAttrs removeAttrs fromTOML readFile concatStringsSep hasAttr replaceStrings attrNames attrValues isAttrs;
           inherit (nixlib.lib) hasAttrByPath attrByPath makeBinPath splitString recursiveUpdate;
-          inherit (prev) writeTextFile writeShellScript writeShellScriptBin;
+          inherit (final) writeTextFile writeShellScript writeShellScriptBin;
 
-          bashBin = "${prev.bashInteractive}/bin";
+          bashBin = "${final.bashInteractive}/bin";
           bashPath = "${bashBin}/bash";
           ansiEsc = code: "[${toString code}m";
 
@@ -130,7 +130,7 @@
             in
             (derivation ({
               inherit name;
-              inherit (prev) system;
+              inherit (final) system;
               builder = bashPath;
               PATH = "${bashBin}:${makeBinPath ([ introCmd ] ++ packages)}";
               stdenv = stdenv;
@@ -144,8 +144,8 @@
                     pkgName = if isAttrs pkg then pkg.name else pkg;
                     pkgPath = splitString "." pkgName;
                   in
-                  if hasAttrByPath pkgPath prev then
-                    attrByPath pkgPath null prev
+                  if hasAttrByPath pkgPath final then
+                    attrByPath pkgPath null final
                   else abort ''
 
                     No such package "${pkgName}".
