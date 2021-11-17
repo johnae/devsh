@@ -18,7 +18,7 @@
         let
           inherit (builtins) mapAttrs removeAttrs fromTOML readFile concatStringsSep hasAttr replaceStrings attrNames attrValues isAttrs;
           inherit (nixlib.lib) hasAttrByPath attrByPath makeBinPath splitString recursiveUpdate;
-          inherit (final) writeTextFile writeShellScript writeShellScriptBin;
+          inherit (final) writeTextFile writeShellScript writeShellScriptBin buildEnv;
 
           bashBin = "${final.bashInteractive}/bin";
           bashPath = "${bashBin}/bash";
@@ -127,12 +127,17 @@
               shellHook = writeShellScript "${name}-hook" ''
                 ${introCmd}/bin/intro
               '';
+              devShBuildEnv = buildEnv {
+                inherit name;
+                paths = [ introCmd ] ++ packages;
+              };
+
             in
             (derivation ({
               inherit name;
               inherit (final) system;
               builder = bashPath;
-              PATH = "${bashBin}:${makeBinPath ([ introCmd ] ++ packages)}";
+              PATH = "${bashBin}:${makeBinPath devShBuildEnv}";
               stdenv = stdenv;
               inherit shellHook;
             } // extraAttrs // env)) // { inherit meta passthru; } // passthru;
