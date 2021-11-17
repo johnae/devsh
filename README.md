@@ -1,6 +1,6 @@
 # Nix DevSh
 
-This is my take on a Nix devshell. It is only compatible with flakes so you need to be using that feature.
+This is me toying with something a bit similar to [devshell](https://github.com/numtide/devshell) but a lot simpler. I would advise against using this, at least at the moment. I'm just experimenting really. If you're looking for something like this I would point you in the direction of already mentioned [devshell](https://github.com/numtide/devshell).
 
 ## Usage
 
