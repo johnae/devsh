@@ -137,7 +137,7 @@
               inherit name;
               inherit (final) system;
               builder = bashPath;
-              PATH = "${bashBin}:${makeBinPath devShBuildEnv}";
+              PATH = "${bashBin}:${devShBuildEnv}/bin";
               stdenv = stdenv;
               inherit shellHook;
             } // extraAttrs // env)) // { inherit meta passthru; } // passthru;
